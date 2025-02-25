@@ -21,7 +21,7 @@ You can install the package via composer:
 
 ```bash
 
-composer require arnold/livewire-alert
+composer require arnoldwamae/livewire-alert
 
 ```
 
