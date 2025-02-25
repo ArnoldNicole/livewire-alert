@@ -1,4 +1,3 @@
-
 # Livewire Alert
 
 <a href="https://github.com/jantinnerezo/livewire-alert/actions"><img src="https://github.com/jantinnerezo/livewire-alert/workflows/PHPUnit/badge.svg" alt="Build Status"></a>
@@ -6,12 +5,14 @@
 <a href="https://packagist.org/packages/jantinnerezo/livewire-alert"><img src="https://img.shields.io/packagist/dt/jantinnerezo/livewire-alert" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/jantinnerezo/livewire-alert"><img src="https://img.shields.io/packagist/l/jantinnerezo/livewire-alert" alt="License"></a>
 
-Livewire Alert is a simple alert utility package designed to seamlessly integrate with your Livewire components. Under the hood, it utilizes SweetAlert2, offering you the functionality of SweetAlert2 without the need for any custom Javascript. 
+Livewire Alert is a simple alert utility package designed to seamlessly integrate with your Livewire components. Under the hood, it utilizes SweetAlert2, offering you the functionality of SweetAlert2 without the need for any custom Javascript.
 
 ## Interactive Demo
-Check the interactive demo here:  https://livewire-alert.jantinnerezo.com
 
-## Contribute to interactive demo 
+Check the interactive demo here: https://livewire-alert.jantinnerezo.com
+
+## Contribute to interactive demo
+
 Do you have any ideas in mind that you can add to the interactive demo? Fork and submit a PR here: https://github.com/jantinnerezo/livewire-alert-demo
 
 ## Installation
@@ -20,7 +21,7 @@ You can install the package via composer:
 
 ```bash
 
-composer require jantinnerezo/livewire-alert
+composer require arnold/livewire-alert
 
 ```
 
@@ -28,32 +29,33 @@ Next, add the scripts component to your template after the `@livewireScripts`.
 
 > SweetAlert2 script is not included by default so make sure you include it before livewire alert script.
 
-``` html
-<body> 
-
+```html
+<body>
   @livewireScripts
 
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  
+
   <x-livewire-alert::scripts />
-  
-</body> 
+</body>
 ```
 
 You can also manually include the script by publishing `livewire-alert.js`
 
-``` bash
+```bash
 php artisan vendor:publish --tag=livewire-alert:assets
 ```
 
 And then in your view you can include the published script instead of including inline script with `<x-livewire-alert::scripts />` component.
+
 > If you go this path, make sure to include the `<x-livewire-alert::flash />` right after the livewire-alert script if you still want the flash feature.
-``` html
-<script src="{{ asset('vendor/livewire-alert/livewire-alert.js') }}"></script> 
+
+```html
+<script src="{{ asset('vendor/livewire-alert/livewire-alert.js') }}"></script>
 <x-livewire-alert::flash />
 ```
 
 ## Requirements
+
 This package is meant to use with Livewire components. Make sure you are using it with Livewire projects only.
 
 - PHP 7.2 or higher
@@ -68,13 +70,13 @@ This package is meant to use with Livewire components. Make sure you are using i
 
 You can use livewire alert by using the `LivewireAlert` trait.
 
-``` php
+```php
 use Jantinnerezo\LivewireAlert\LivewireAlert;
- 
+
 class Index extends Component
 {
     use LivewireAlert;
-    
+
     public function submit()
     {
         $this->alert('success', 'Basic Alert');
@@ -82,29 +84,29 @@ class Index extends Component
 }
 ```
 
-Displaying different alert icons. 
+Displaying different alert icons.
+
 > The default alert behaviour is a toast notification.
 
-``` php
+```php
 $this->alert('success', 'Success is approaching!');
 ```
 
-``` php
+```php
 $this->alert('warning', 'The world has warned you.');
 ```
 
-``` php
+```php
 $this->alert('info', 'The fact is you know your name :D');
 ```
 
-``` php
+```php
 $this->alert('question', 'How are you today?');
 ```
 
 Disabling toast notification alert treatment.
 
-
-``` php
+```php
 $this->alert('info', 'This is not as toast alert', [
     'toast' => false
 ]);
@@ -112,13 +114,14 @@ $this->alert('info', 'This is not as toast alert', [
 
 ## Positioning Alert
 
-``` php
+```php
 $this->alert('info', 'Centering alert', [
     'position' => 'center'
 ]);
 ```
 
 List of the following alert positions:
+
 - top
 - top-start
 - top-end
@@ -133,10 +136,9 @@ List of the following alert positions:
 
 SweetAlert2 has 3 buttons that is not shown by default.
 
-
 To show confirm button, simply pass the `showConfirmButton` to alert configuration and set it to `true`.
 
-``` php
+```php
 $this->alert('question', 'How are you today?', [
     'showConfirmButton' => true
 ]);
@@ -144,7 +146,7 @@ $this->alert('question', 'How are you today?', [
 
 Change confirm button text:
 
-``` php
+```php
 $this->alert('question', 'How are you today?', [
     'showConfirmButton' => true,
     'confirmButtonText' => 'Good'
@@ -153,7 +155,7 @@ $this->alert('question', 'How are you today?', [
 
 Adding event when confirm button is clicked. First create a function that will be fired when confirm button is clicked:
 
-``` php
+```php
 public function confirmed()
 {
     // Do something
@@ -162,7 +164,7 @@ public function confirmed()
 
 Add to it event listeners array to register it.
 
-``` php
+```php
 protected $listeners = [
     'confirmed'
 ];
@@ -170,7 +172,7 @@ protected $listeners = [
 
 Or
 
-``` php
+```php
 public function getListeners()
 {
     return [
@@ -181,18 +183,19 @@ public function getListeners()
 
 And then pass it to `onConfirmed` key of the alert configuration.
 
-``` php
+```php
 $this->alert('question', 'How are you today?', [
     'showConfirmButton' => true,
     'confirmButtonText' => 'Good',
-    'onConfirmed' => 'confirmed' 
+    'onConfirmed' => 'confirmed'
 ]);
 ```
 
-You can also pass a parameter to the event to get the alert response. 
+You can also pass a parameter to the event to get the alert response.
+
 > Useful when you need to get the value of the input inside the alert.
 
-``` php
+```php
 $this->alert('warning', 'Please enter password', [
     'showConfirmButton' => true,
     'confirmButtonText' => 'Submit',
@@ -203,13 +206,13 @@ $this->alert('warning', 'Please enter password', [
         '    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,}$/.test(value) ?'.
         '    undefined : "Error in password"'.
         '  )'.
-        ')',    
+        ')',
     'allowOutsideClick' => false,
     'timer' => null
 ]);
 ```
 
-``` php
+```php
 public function confirmed($data)
 {
     // Get input value and do anything you want to it
@@ -219,21 +222,21 @@ public function confirmed($data)
 
 Just do the same thing to show `deny` and `cancel` button. Just create a function for each button and register it to event listeners.
 
-``` php
-public function denied() 
+```php
+public function denied()
 {
     // Do something when denied button is clicked
 }
 ```
 
-``` php
-public function cancelled() 
+```php
+public function cancelled()
 {
     // Do something when cancel button is clicked
 }
 ```
 
-``` php
+```php
 public function getListeners()
 {
     return [
@@ -245,7 +248,7 @@ public function getListeners()
 
 Make sure to set `showDenyButton` and `showCancelButton` to `true`.
 
-``` php
+```php
 $this->alert('warning', 'Alert with deny and cancel button', [
     'showDenyButton' => true,
     'denyButtonText' => 'Deny',
@@ -256,19 +259,20 @@ $this->alert('warning', 'Alert with deny and cancel button', [
 ]);
 ```
 
-Emit events to only specific component. Instead of passing the listener directly to the event, pass an array with `component` and `listeners` keys. 
+Emit events to only specific component. Instead of passing the listener directly to the event, pass an array with `component` and `listeners` keys.
 
-``` PHP
+```PHP
 'onConfirmed' => [
    'component' => 'livewire-component',
    'listener' => 'confirmed'
 ];
 ```
 
-Don't want to define extra button configuration every time you show alert confirmation? Use the confirm method instead. 
+Don't want to define extra button configuration every time you show alert confirmation? Use the confirm method instead.
+
 > You can always override default confirm settings just tweak the configuration.
 
-``` php
+```php
 $this->confirm('Are you sure do want to leave?', [
     'onConfirmed' => 'confirmed',
 ]);
@@ -278,7 +282,7 @@ $this->confirm('Are you sure do want to leave?', [
 
 You can also use alert as a flash notification. You can pass the redirect route on the fourth parameter, redirects to `/` by default.
 
-``` php
+```php
 $this->flash('success', 'Successfully submitted form', [], '/');
 ```
 
@@ -286,11 +290,11 @@ $this->flash('success', 'Successfully submitted form', [], '/');
 
 Override default alert config by publishing the `livewire-alert.php` config file.
 
-``` bash
+```bash
 php artisan vendor:publish --tag=livewire-alert:config
 ```
 
-``` php
+```php
 [
     'alert' => [
         'position' => 'top-end',
@@ -318,7 +322,7 @@ php artisan vendor:publish --tag=livewire-alert:config
 
 You can customize alert style by passing your custom classes, works perfectly with [TailwindCSS](https://tailwindcss.com/)
 
-``` php
+```php
 [
   'customClass' => [
     'container' => '',
@@ -351,12 +355,9 @@ For more details about customization and configuration please check [SweetAlert2
   <img src="https://contrib.rocks/image?repo=jantinnerezo/livewire-alert" width="300" />
 </a>
 
-
 ## Changelog
 
-
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
-
 
 ## Contributing
 
